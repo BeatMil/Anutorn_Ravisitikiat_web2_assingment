@@ -1,0 +1,25 @@
+img {
+    width: 100%;
+}
+
+div#b2 {
+    background-color: #cbcbcb;
+    /*border: 1px solid red;*/
+    border-radius: 6px;
+}
+
+p {
+    font-family: Arial;
+}
+
+h2 {
+    font-family: Arial;
+}
+
+h3 {
+    font-family: Courier New;
+}
+
+li {
+    font-family: Arial;
+}
