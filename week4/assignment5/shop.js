@@ -26,6 +26,17 @@ var shop = {
             //</li>
         }
         productElement.innerHTML = productText;
+    },
+
+    displayTotalPrice: function() {
+        var totalPrice = 0;
+        for (var i=0; i<this.price.length; i++){
+            totalPrice += this.price[i];
+            console.log(totalPrice)
+        }
+        totalPrice2 = String(totalPrice);
+        document.getElementById("total_price").innerHTML += totalPrice2;
+        document.getElementById("total_price").innerHTML += '<span class="badge badge-warning badge-pill">25% off</span>'
     }
 }
 
@@ -58,4 +69,5 @@ var calendar = {
 console.log(document.getElementById("shop_name").innerText)
 shop.displayCustomerName();
 shop.displayProductList();
+shop.displayTotalPrice();
 calendar.displayCalendar();
