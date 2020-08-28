@@ -1,0 +1,6 @@
+
+B1
+
+number of seat: 1
+
+Total price: 1000

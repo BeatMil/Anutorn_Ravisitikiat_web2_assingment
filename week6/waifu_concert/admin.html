@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <span>admin</span>
+        <span>
+            <a href='home.html'>customer</a>
+        </span>
+        <p id="console"></p>
+        <input type="submit" id="submit" value="submit">
+        <button type="button" onclick="uncheckAll()">clear</button>
+
+
+        <p id="console2"></p>
+    </body>
+    <script>
+        $(document).ready(function(){
+            // print seats id and checkbox at the start
+            $.post('ajax.php', {'action':'adminShow'}, function (response) {
+                $('#console').html(response)
+            });
+            // runs when submit button is clicked
+            // send the checkbox data to php 
+            $('#submit').click(function(){
+                $(":checkbox").each(function(index, element){
+    // what the hell, this one works!
+                    if ($(this).prop("checked") == true) {
+                        // runs setTaken function in ojax.php
+                        var clickBtnId = $(this).attr('id');
+                        var ajaxurl = 'ajax.php',
+                        data =  {'action': 'setTaken', 'id' : clickBtnId};
+                        $.post(ajaxurl, data)
+                    }
+                    else if ($(this).prop("checked") == false) {
+                        // runs unsetTaken function in ojax.php
+                        var clickBtnId = $(this).attr('id');
+                        var ajaxurl = 'ajax.php',
+                        data =  {'action': 'unsetTaken','id' : clickBtnId};
+                        $.post(ajaxurl, data)
+                    }
+                });
+               $('#console2').text('submitted!')
+            });
+        });
+function uncheckAll(){
+    $('input[type="checkbox"]:checked').prop('checked',false);
+}
+    </script>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    </head>
+    <script>
+        // THIS IF MAKE STRING FORMAT POSSIBLE!
+        if (!String.prototype.format) {
+            String.prototype.format = function() {
+                var args = arguments;
+                return this.replace(/{(\d+)}/g, function(match, number) {
+                    return typeof args[number] != 'undefined'
+                        ? args[number]
+                        : match
+                    ;
+                });
+            };
+        }
+        // testing write file
+        var waifu = "Aira";
+
+        // click checkbox set attr select to 1
+        // click again set attr select to 0
+        function set_select(id) {
+            if (id.getAttribute("select") == "0") {
+                id.setAttribute("select","1");
+            }
+            else {
+                id.setAttribute("select","0");
+            }
+        }
+
+function get_result() {
+    var elements = document.getElementsByName("box");
+    selected_seat = 0;
+    seat_id = [];
+    elements.forEach(function(item, index, arr) {
+        var element = arr[index];
+        if (element.getAttribute("select") == "1") {
+            selected_seat += 1;
+            seat_id.push(element.getAttribute("id"));
+        }
+    });
+    console.log(selected_seat);
+    if (selected_seat === 0){
+        alert("please choose at least a seat");
+    }
+    else {
+        $('#console2').text('submitted!');
+        window.location.href = "result.html";
+    }
+}
+// unuse function
+// this function doesn't change select attribute to 1
+function checkAll(){
+    $('input[type="checkbox"]').prop('checked',true);
+}
+// this funcion too
+function uncheckAll(){
+    $('input[type="checkbox"]:checked').prop('checked',false);
+}
+    </script>
+    <body>
+        <a href="admin.html">admin</a>
+        <span>customer</span>
+        <p>Waifu concert!</p>
+        <p id="console"></p>
+        <input type="submit" id="submit" value="buy now!" onclick="get_result()">
+        <p id="console2"></p>
+    </body>
+    <script>
+        $(document).ready(function(){
+            // post request to ajax.php
+            var request = $.post('ajax.php', {'action':'show'}, function (response) {
+                $('#console').html(response)
+            });
+            // if not connected to database
+            // it probably gonna go error
+            // alert and say that go to xampp
+            request.fail(function() {
+                alert("turn on xampp?");
+            })
+            // submit button is clicked
+            $('#submit').click(function(){
+                $(":checkbox").each(function(index, element){
+                    // what the hell, this one works!
+                    if ($(this).prop("checked") == true) {
+                        var clickBtnId = $(this).attr('id');
+                        var ajaxurl = 'ajax.php',
+                            data =  {'action': 'setTaken', 'id' : clickBtnId};
+                        $.post(ajaxurl, data);
+                    }
+                    else if ($(this).prop("checked") == false) {
+                        var clickBtnId = $(this).attr('id');
+                        var ajaxurl = 'ajax.php',
+                            data =  {'action': 'unsetTaken', 'id' : clickBtnId};
+                        $.post(ajaxurl, data);
+                    }
+                });
+                $.post('ajax.php',{'action':'writeFile','text':waifu,'seat_id':seat_id});
+            });
+        });
+    </script>
+</html>

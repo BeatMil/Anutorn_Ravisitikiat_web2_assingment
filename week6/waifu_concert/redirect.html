@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>JavaScript Automatic Page Redirect</title>
+        <script>
+            function pageRedirect() {
+                window.location.replace("home.html");
+            }
+
+            function pageHref() {
+                window.location.href("home.html");
+            }
+//            setTimeout("pageRedirect()", 2000);
+        </script>
+    </head>
+    <body>
+        <p><strong>Note:</strong> You will be redirected to the tutorialrepublic.com in 10 sec.</p>
+        <button type="button" onclick="pageHref()">click here</button>
+    </body>
+</html>

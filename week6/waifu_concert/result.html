@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    </head>
+    <script>
+        function set_select(id) {
+            if (id.getAttribute("select") == "0") {
+                id.setAttribute("select","1");
+            }
+            else {
+                id.setAttribute("select","0");
+            }
+        }
+    </script>
+    <body>
+        <h1>Result</h1>
+        <p>Thank you <3</p>
+        <p id="console"></p>
+    </body>
+    <script>
+        var request = $.post('ajax.php', {'action':'readNewFile'}, function (response) {
+            $('#console').html(response)
+        });
+    </script>
+</html>
